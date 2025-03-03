@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, TextInput } from "react-native";
+import { View, TextInput, Pressable, Text } from "react-native";
+import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 export default function TextInputScreen() {
   const [textValue, changeTextValue] = useState("");
@@ -20,8 +21,8 @@ export default function TextInputScreen() {
       <TextInput
         style={{ backgroundColor: "lightblue", padding: 10, borderWidth: 1 }}
         value={passwordValue}
-        onChangeText={(value) => {
-          changePasswordValue(value);
+        onChangeText={(values) => {
+          changePasswordValue(values);
         }}
         secureTextEntry={true}
         keyboardType={"default"}
@@ -29,6 +30,32 @@ export default function TextInputScreen() {
         returnKeyType={"done"}
         autoFocus={false}
       />
+      <View style={{ alignItems: "center" }}>
+        <Pressable
+          style={[
+            {
+              backgroundColor: "blue",
+              borderRadius: 50,
+              width: 100,
+            },
+            (textValue.length === 0 || passwordValue.length < 8) && {opacity : 0.5}
+          ]}
+          disabled={textValue.length === 0 || passwordValue.length < 8}
+          onPress={() => {
+            console.log(textValue + " :  " + passwordValue);
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              alignContent: "center",
+              textAlign: "center",
+            }}
+          >
+            Submit
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
